@@ -1,10 +1,13 @@
 import './App.css';
+// import ComposeEmail from './composeEmail/compose-email.component';
 
-import HomePage from './homePage.component';
+import HomePage from './pages/homepage/homePage.component';
+
 function App() {
   return (
-    <div>
+    <div className='App'>
       <HomePage />
+      {/* <ComposeEmail /> */}
     </div>
   );
 }
