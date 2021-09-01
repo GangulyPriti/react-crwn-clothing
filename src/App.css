@@ -1,3 +1,7 @@
 body {
   font-family: 'Open Sans Condensed';
+  background-color: burlywood;
+}
+.App {
+  padding: 0.01em 16px;
 }
