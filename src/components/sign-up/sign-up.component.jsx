@@ -3,8 +3,8 @@ import React from 'react';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-import { createUserProfileDocument } from '../../firebase/firebase.util';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth, createUserProfileDocument } from '../../firebase/firebase.util';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import './sign-up.styles.scss';
 
 class SignUp extends React.Component {
@@ -30,7 +30,6 @@ class SignUp extends React.Component {
     }
 
     try {
-      const auth = getAuth();
       let user;
       await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
