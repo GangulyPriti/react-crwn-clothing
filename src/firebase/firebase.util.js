@@ -1,6 +1,12 @@
 import { initializeApp } from '@firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  setDoc,
+} from 'firebase/firestore';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/firestore';
@@ -17,6 +23,32 @@ const config = {
 };
 
 initializeApp(config);
+var db = getFirestore();
+
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+  console.log(userAuth, additionalData);
+  if (!userAuth) return;
+  // // const docRef = doc('users');
+  // // const docSnap = await getDoc(docRef);
+  const snapShot = await getDocs(collection(db, 'users'));
+  const userRef = doc(db, 'users', userAuth.uid);
+  if (!snapShot.exists) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+    try {
+      await setDoc(userRef, {
+        displayName,
+        email,
+        createdAt,
+        ...additionalData,
+      });
+    } catch (error) {
+      console.log('error creating user', error.message);
+    }
+  }
+
+  return userRef;
+};
 
 export const auth = getAuth();
 export const firestore = getFirestore();
